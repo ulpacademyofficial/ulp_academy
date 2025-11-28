@@ -106,6 +106,9 @@ body {
     color: var(--primary-color);
     position: relative;
     display: inline-block;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    max-width: 100%;
 }
 
 .section-description {
@@ -1251,4 +1254,160 @@ body {
     display: flex;
     flex-direction: column;
     gap: 0.2rem;
+}
+/* Course Detail Styles */
+.course-header {
+    background-color: var(--gray);
+    padding: 4rem 0;
+}
+
+.course-meta {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+    color: #666;
+    font-size: 0.9rem;
+    flex-wrap: wrap;
+}
+
+.course-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.course-meta-item i {
+    color: var(--secondary-color);
+}
+
+.course-content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    margin-top: 3rem;
+}
+
+/* Prevent grid blowout */
+.course-content-grid > * {
+    min-width: 0;
+}
+
+.sidebar-card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 100px;
+}
+
+.fee-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.fee-table th,
+.fee-table td {
+    padding: 1rem;
+    border: 1px solid #eee;
+    text-align: left;
+    vertical-align: top;
+}
+
+.fee-table th {
+    background-color: var(--gray);
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+/* First column (Class/Stream) - allow wrapping */
+.fee-table th:nth-child(1),
+.fee-table td:nth-child(1) {
+    width: auto;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Second column (Fees) - keep compact */
+.fee-table th:nth-child(2),
+.fee-table td:nth-child(2) {
+    width: 1%; /* Shrink to fit content */
+    white-space: nowrap;
+}
+
+.exam-centre-card {
+    background: var(--gray);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--secondary-color);
+    margin-top: 10px;
+}
+
+.exam-centre-card h4 {
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+.exam-centre-card p {
+    margin-bottom: 0;
+    display: flex;
+    align-items: flex-start;
+}
+
+.exam-centre-card i {
+    color: var(--secondary-color);
+    margin-right: 8px;
+    margin-top: 4px; /* Align icon with text */
+}
+
+.curriculum-list {
+    list-style: none;
+    margin-top: 1rem;
+}
+
+.curriculum-list li {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.curriculum-list li:last-child {
+    border-bottom: none;
+}
+
+/* Responsive Course Detail */
+@media (max-width: 768px) {
+    .course-content-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .course-header {
+        padding: 3rem 0;
+    }
+
+    .course-meta {
+        gap: 1rem;
+        flex-direction: column;
+    }
+
+    .sidebar-card {
+        position: static; /* Remove sticky on mobile */
+    }
+    
+    .fee-table th,
+    .fee-table td {
+        padding: 0.75rem 0.5rem; /* Reduce padding on mobile */
+        font-size: 0.9rem;
+    }
+    
+    .fee-table th:nth-child(2),
+    .fee-table td:nth-child(2) {
+        width: auto; /* Let it fit content on mobile */
+    }
 }

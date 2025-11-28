@@ -13,61 +13,7 @@
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .course-header {
-            background-color: var(--gray);
-            padding: 4rem 0;
-        }
-        .course-meta {
-            display: flex;
-            gap: 2rem;
-            margin-bottom: 1.5rem;
-            color: #666;
-            font-size: 0.9rem;
-        }
-        .course-meta-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .course-meta-item i {
-            color: var(--secondary-color);
-        }
-        .course-content-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 3rem;
-            margin-top: 3rem;
-        }
-        .sidebar-card {
-            background: var(--white);
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 100px;
-        }
-        .fee-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-        }
-        .fee-table th, .fee-table td {
-            padding: 1rem;
-            border: 1px solid #eee;
-            text-align: left;
-        }
-        .fee-table th {
-            background-color: var(--gray);
-            font-weight: 600;
-            color: var(--primary-color);
-        }
-        @media (max-width: 768px) {
-            .course-content-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+
 </head>
 
 <body>
@@ -142,11 +88,11 @@
                                     <td>₹39,845</td>
                                 </tr>
                                 <tr>
-                                    <td>12th PCM</td>
+                                    <td>12th PCM (Physics, Chemistry, Mathematics)</td>
                                     <td>₹44,365</td>
                                 </tr>
                                 <tr>
-                                    <td>12th PCB</td>
+                                    <td>12th PCB (Physics, Chemistry, Biology)</td>
                                     <td>₹47,875</td>
                                 </tr>
                             </tbody>
@@ -154,16 +100,19 @@
                         <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">* Note: The second PCM listed in your request was assumed to be PCB based on typical stream options, or it could be a variation. Please confirm if needed.</p>
 
                         <h3 style="margin-top: 3rem;">Exam Centre Details</h3>
-                        <div style="background: var(--gray); padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--secondary-color);">
-                            <h4 style="margin-bottom: 0.5rem; color: var(--primary-color);">ULP ACADEMY</h4>
-                            <p style="margin-bottom: 0;">
-                                <i class="fas fa-map-marker-alt" style="color: var(--secondary-color); margin-right: 8px;"></i>
+                        <div class="exam-centre-card">
+                            <h4>ULP ACADEMY</h4>
+                            <p>
+                                <i class="fas fa-map-marker-alt"></i>
                                 A-589, Block A, Palam Vihar, Gurgaon, Haryana 122017
                             </p>
                         </div>
                     </div>
 
                     <div class="sidebar">
+                        <div class="sidebar-card" style="margin-bottom: 2rem; padding: 0; overflow: hidden;">
+                            <img src="assets/bosse.png" alt="Students studying" style="width: 100%; height: auto; display: block;">
+                        </div>
                         <div class="sidebar-card">
                             <h3 style="margin-bottom: 1.5rem; color: var(--primary-color);">Key Highlights</h3>
                             <ul class="features-list" style="margin-top: 0; font-size: 0.95rem;">
