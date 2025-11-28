@@ -1,0 +1,53 @@
+/* Courses Page Specific Styles */
+
+/* Hero Section */
+.courses-hero {
+    height: 50vh;
+    min-height: 400px;
+}
+
+/* Section Title Left Align */
+.courses .section-title {
+    text-align: left;
+}
+
+/* Course Description Text */
+.course-description-wrapper {
+    margin: 2rem 0 3rem;
+}
+
+.course-description-text {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 1rem;
+}
+
+/* Course Card Image Wrapper */
+.course-card-no-padding {
+    padding: 0;
+    overflow: hidden;
+}
+
+.course-card-image-wrapper {
+    width: 100%;
+    background-color: #f8f9fa;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.course-card-image-wrapper img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.course-card-content {
+    padding: 2rem;
+}
+
+.course-card-content .btn {
+    margin-top: 1rem;
+}

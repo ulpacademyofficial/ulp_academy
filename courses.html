@@ -14,6 +14,7 @@
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="courses.css">
 </head>
 
 <body>
@@ -39,7 +40,7 @@
     </header>
 
     <main>
-        <section class="hero" style="height: 50vh; min-height: 400px;">
+        <section class="hero courses-hero">
             <div class="hero-bg"></div>
             <div class="container hero-content">
                 <h1 class="hero-title">Explore Our <span class="highlight">University Courses</span></h1>
@@ -49,36 +50,36 @@
 
         <section class="section courses">
             <div class="container">
-                <h2 class="section-title" style="text-align: left;">Available Courses</h2>
-                
-                <div style="margin: 2rem 0 3rem;">
-                    <p style="font-size: 1.05rem; line-height: 1.8; color: #555; margin-bottom: 1rem;">
+                <h2 class="section-title">Available Courses</h2>
+
+                <div class="course-description-wrapper">
+                    <p class="course-description-text">
                         ULP Academy is proud to be an authorized exam center for BOSSE and NIOS, offering flexible open schooling programs for students in 10th and 12th grades. These nationally recognized boards provide an excellent opportunity for students to complete their education with flexibility and quality support.
                     </p>
-                    <p style="font-size: 1.05rem; line-height: 1.8; color: #555;">
+                    <p class="course-description-text">
                         Whether you're looking for skill-based education or a recognized alternative to traditional schooling, we're here to guide you every step of the way.
                     </p>
                 </div>
 
                     <div class="courses-grid">
-                    <div class="course-card" style="padding: 0; overflow: hidden;">
-                        <div style="width: 100%; background-color: #f8f9fa; padding: 2rem; display: flex; align-items: center; justify-content: center;">
-                            <img src="assets/bosse_logo.png" alt="BOSSE Logo" style="width: 100%; height: auto; object-fit: contain;">
+                    <div class="course-card course-card-no-padding">
+                        <div class="course-card-image-wrapper">
+                            <img src="assets/bosse_logo.png" alt="BOSSE Logo">
                         </div>
-                        <div style="padding: 2rem;">
+                        <div class="course-card-content">
                             <h3>BOSSE</h3>
                             <p>Board Of Open Schooling and Skill Education. Flexible schooling for 10th and 12th.</p>
-                            <a href="bosse.html" class="btn btn-primary" style="margin-top: 1rem;">View Details</a>
+                            <a href="bosse.html" class="btn btn-primary">View Details</a>
                         </div>
                     </div>
-                    <div class="course-card" style="padding: 0; overflow: hidden;">
-                        <div style="width: 100%; background-color: #f8f9fa; padding: 2rem; display: flex; align-items: center; justify-content: center;">
-                            <img src="assets/nios_logo.png" alt="NIOS Logo" style="width: 100%; height: auto; object-fit: contain;">
+                    <div class="course-card course-card-no-padding">
+                        <div class="course-card-image-wrapper">
+                            <img src="assets/nios_logo.png" alt="NIOS Logo">
                         </div>
-                        <div style="padding: 2rem;">
+                        <div class="course-card-content">
                             <h3>NIOS</h3>
                             <p>National Institute of Open Schooling. Recognized open schooling for 10th and 12th.</p>
-                            <a href="nios.html" class="btn btn-primary" style="margin-top: 1rem;">View Details</a>
+                            <a href="nios.html" class="btn btn-primary">View Details</a>
                         </div>
                     </div>
                 </div>

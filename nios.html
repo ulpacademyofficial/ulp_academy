@@ -13,18 +13,7 @@
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @media (max-width: 768px) {
-            .course-header .container > div {
-                flex-direction: column !important;
-                text-align: center !important;
-            }
-            .course-header img {
-                width: 160px !important;
-                height: 160px !important;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="nios.css">
 
 </head>
 
@@ -50,14 +39,14 @@
         </div>
     </header>
 
-    <main style="padding-top: 80px;">
+    <main class="nios-main">
         <section class="course-header">
             <div class="container">
-                <div style="display: flex; align-items: center; gap: 2rem; margin-bottom: 1rem;">
-                    <img src="assets/nios_logo.png" alt="NIOS Logo" style="width: 120px; height: 120px; object-fit: contain;">
-                    <div>
-                        <span style="color: var(--secondary-color); font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Open Schooling</span>
-                        <h1 class="section-title" style="margin-top: 0.5rem; display: block;">NIOS (National Institute of Open Schooling)</h1>
+                <div class="course-header-logo-wrapper">
+                    <img src="assets/nios_logo.png" alt="NIOS Logo" class="nios-logo">
+                    <div class="course-header-text">
+                        <span class="course-category-label">Open Schooling</span>
+                        <h1 class="section-title course-header-title">NIOS (National Institute of Open Schooling)</h1>
                     </div>
                 </div>
                 <div class="course-meta">
@@ -78,11 +67,11 @@
                 <div class="course-content-grid">
                     <div class="main-content">
                         <h2>About NIOS</h2>
-                        <p style="margin-bottom: 2rem;">
-                            The National Institute of Open Schooling (NIOS) is an autonomous institution under the Ministry of Education, Government of India. 
+                        <p class="about-text">
+                            The National Institute of Open Schooling (NIOS) is an autonomous institution under the Ministry of Education, Government of India.
                             It offers academic as well as vocational courses for students who wish to complete their education through open and distance learning.
                         </p>
-                        
+
                         <h3>Fee Structure</h3>
                         <table class="fee-table">
                             <thead>
@@ -114,9 +103,9 @@
                                 </tr>
                             </tbody>
                         </table>
-                         <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">* Note: The second PCM listed in your request was assumed to be PCB based on typical stream options, or it could be a variation. Please confirm if needed.</p>
+                         <p class="fee-note">* Note: The second PCM listed in your request was assumed to be PCB based on typical stream options, or it could be a variation. Please confirm if needed.</p>
 
-                        <h3 style="margin-top: 3rem;">Exam Centre Details</h3>
+                        <h3 class="exam-centre-heading">Exam Centre Details</h3>
                         <div class="exam-centre-card">
                             <h4>ULP ACADEMY</h4>
                             <p>
@@ -127,18 +116,18 @@
                     </div>
 
                     <div class="sidebar">
-                        <div class="sidebar-card" style="margin-bottom: 2rem; padding: 0; overflow: hidden;">
-                            <img src="assets/nios.png" alt="Students studying" style="width: 100%; height: auto; display: block;">
+                        <div class="sidebar-card sidebar-image-card">
+                            <img src="assets/nios.png" alt="Students studying">
                         </div>
                         <div class="sidebar-card">
-                            <h3 style="margin-bottom: 1.5rem; color: var(--primary-color);">Key Highlights</h3>
-                            <ul class="features-list" style="margin-top: 0; font-size: 0.95rem;">
+                            <h3 class="highlights-title">Key Highlights</h3>
+                            <ul class="features-list highlights-list">
                                 <li><i class="fas fa-check-circle"></i> Government Recognized</li>
                                 <li><i class="fas fa-book-reader"></i> Flexible Education</li>
                                 <li><i class="fas fa-building"></i> Local Exam Centre</li>
                                 <li><i class="fas fa-certificate"></i> Valid for Higher Studies</li>
                             </ul>
-                            <a href="index.html#contact" class="btn btn-primary btn-block" style="margin-top: 2rem; text-align: center;">Enquire Now</a>
+                            <a href="index.html#contact" class="btn btn-primary btn-block sidebar-cta-btn">Enquire Now</a>
                         </div>
                     </div>
                 </div>
