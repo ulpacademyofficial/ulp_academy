@@ -622,10 +622,14 @@ body {
 
 .faq-item {
     background: var(--white);
-    padding: 2rem;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     transition: var(--transition);
+}
+
+.faq-item .faq-question span {
+    font-family: var(--font-heading);
+    font-size: 1rem;
 }
 
 .faq-item h3 {

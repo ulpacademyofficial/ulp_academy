@@ -69,4 +69,24 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("scroll", revealOnScroll);
   // Trigger once on load
   revealOnScroll();
+
+  // FAQ Accordion
+  const faqQuestions = document.querySelectorAll(".faq-question");
+
+  faqQuestions.forEach((question) => {
+    question.addEventListener("click", () => {
+      const faqItem = question.parentElement;
+      const isActive = faqItem.classList.contains("active");
+
+      // Close all FAQ items
+      document.querySelectorAll(".faq-item").forEach((item) => {
+        item.classList.remove("active");
+      });
+
+      // Toggle current item
+      if (!isActive) {
+        faqItem.classList.add("active");
+      }
+    });
+  });
 });
