@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIOS - National Institute of Open Schooling - ULP Academy</title>
+    <meta name="description" content="Enroll in NIOS (National Institute of Open Schooling) with ULP Academy. Check fee structure for 10th and 12th classes.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .course-header {
+            background-color: var(--gray);
+            padding: 4rem 0;
+        }
+        .course-meta {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .course-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .course-meta-item i {
+            color: var(--secondary-color);
+        }
+        .course-content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        .sidebar-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 100px;
+        }
+        .fee-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .fee-table th, .fee-table td {
+            padding: 1rem;
+            border: 1px solid #eee;
+            text-align: left;
+        }
+        .fee-table th {
+            background-color: var(--gray);
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        @media (max-width: 768px) {
+            .course-content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <img src="assets/logo.jpg" alt="ULP Academy Logo">
+                <span class="logo-text">ULP Academy</span>
+            </a>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html#home" class="nav-link">Home</a></li>
+                    <li><a href="index.html#about" class="nav-link">About</a></li>
+                    <li><a href="index.html#courses" class="nav-link">Tuitions</a></li>
+                    <li><a href="courses.html" class="nav-link active">University Courses</a></li>
+                    <li><a href="index.html#contact" class="nav-link btn-primary">Contact Us</a></li>
+                </ul>
+                <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main style="padding-top: 80px;">
+        <section class="course-header">
+            <div class="container">
+                <span style="color: var(--secondary-color); font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Open Schooling</span>
+                <h1 class="section-title" style="margin-top: 0.5rem; display: block;">NIOS (National Institute of Open Schooling)</h1>
+                <div class="course-meta">
+                    <div class="course-meta-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Exam Centre: ULP ACADEMY</span>
+                    </div>
+                    <div class="course-meta-item">
+                        <i class="fas fa-user-graduate"></i>
+                        <span>Class 10th & 12th</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="course-content-grid">
+                    <div class="main-content">
+                        <h2>About NIOS</h2>
+                        <p style="margin-bottom: 2rem;">
+                            The National Institute of Open Schooling (NIOS) is an autonomous institution under the Ministry of Education, Government of India. 
+                            It offers academic as well as vocational courses for students who wish to complete their education through open and distance learning.
+                        </p>
+                        
+                        <h3>Fee Structure</h3>
+                        <table class="fee-table">
+                            <thead>
+                                <tr>
+                                    <th>Class / Stream</th>
+                                    <th>Fees</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>10th</td>
+                                    <td>₹40,000</td>
+                                </tr>
+                                <tr>
+                                    <td>12th Arts</td>
+                                    <td>₹44,765</td>
+                                </tr>
+                                <tr>
+                                    <td>12th Commerce</td>
+                                    <td>₹49,845</td>
+                                </tr>
+                                <tr>
+                                    <td>12th PCM</td>
+                                    <td>₹50,076</td>
+                                </tr>
+                                <tr>
+                                    <td>12th PCB</td>
+                                    <td>₹51,000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                         <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">* Note: The second PCM listed in your request was assumed to be PCB based on typical stream options, or it could be a variation. Please confirm if needed.</p>
+
+                        <h3 style="margin-top: 3rem;">Exam Centre Details</h3>
+                        <div style="background: var(--gray); padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--secondary-color);">
+                            <h4 style="margin-bottom: 0.5rem; color: var(--primary-color);">ULP ACADEMY</h4>
+                            <p style="margin-bottom: 0;">
+                                <i class="fas fa-map-marker-alt" style="color: var(--secondary-color); margin-right: 8px;"></i>
+                                A-589, Block A, Palam Vihar, Gurgaon, Haryana 122017
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="sidebar">
+                        <div class="sidebar-card">
+                            <h3 style="margin-bottom: 1.5rem; color: var(--primary-color);">Key Highlights</h3>
+                            <ul class="features-list" style="margin-top: 0; font-size: 0.95rem;">
+                                <li><i class="fas fa-check-circle"></i> Government Recognized</li>
+                                <li><i class="fas fa-book-reader"></i> Flexible Education</li>
+                                <li><i class="fas fa-building"></i> Local Exam Centre</li>
+                                <li><i class="fas fa-certificate"></i> Valid for Higher Studies</li>
+                            </ul>
+                            <a href="index.html#contact" class="btn btn-primary btn-block" style="margin-top: 2rem; text-align: center;">Enquire Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section cta-section">
+            <div class="container">
+                <h2>Ready to Enroll?</h2>
+                <p>Start your journey with NIOS and ULP Academy today.</p>
+                <a href="index.html#contact" class="btn btn-light">Contact Us</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column footer-brand">
+                    <a href="index.html" class="footer-logo-link">
+                        <img src="assets/logo.jpg" alt="ULP Academy Logo" class="footer-logo-img">
+                        <h3>ULP Academy</h3>
+                    </a>
+                    <p>Learn by the unique way of Teaching. Empowering students to achieve excellence.</p>
+                </div>
+
+                <div class="footer-column footer-links-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links-list">
+                        <li><a href="index.html#home">Home</a></li>
+                        <li><a href="index.html#about">About Us</a></li>
+                        <li><a href="index.html#courses">Tuitions</a></li>
+                        <li><a href="courses.html">University Courses</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column footer-contact">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-list">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>
+                                A-589, Block A, Palam Vihar,<br>
+                                Gurgaon, Haryana 122017<br>
+                                India
+                            </span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone-alt"></i>
+                            <div class="footer-phones">
+                                <a href="tel:8447448370">8447448370</a>
+                                <a href="tel:9988993348">9988993348</a>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:ulpacademy.official@gmail.com">ulpacademy.official@gmail.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                &copy; 2024 ULP Academy. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

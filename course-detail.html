@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Details - ULP Academy</title>
+    <meta name="description" content="Course details and curriculum information.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .course-header {
+            background-color: var(--gray);
+            padding: 4rem 0;
+        }
+        .course-meta {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .course-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .course-meta-item i {
+            color: var(--secondary-color);
+        }
+        .course-content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        .sidebar-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 100px;
+        }
+        .curriculum-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+        .curriculum-list li {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .curriculum-list li:last-child {
+            border-bottom: none;
+        }
+        @media (max-width: 768px) {
+            .course-content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <img src="assets/logo.jpg" alt="ULP Academy Logo">
+                <span class="logo-text">ULP Academy</span>
+            </a>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html#home" class="nav-link">Home</a></li>
+                    <li><a href="index.html#about" class="nav-link">About</a></li>
+                    <li><a href="index.html#courses" class="nav-link">Tuitions</a></li>
+                    <li><a href="courses.html" class="nav-link active">University Courses</a></li>
+                    <li><a href="index.html#contact" class="nav-link btn-primary">Contact Us</a></li>
+                </ul>
+                <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main style="padding-top: 80px;">
+        <section class="course-header">
+            <div class="container">
+                <span style="color: var(--secondary-color); font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">University Course</span>
+                <h1 class="section-title" style="margin-top: 0.5rem; display: block;">Course Title Here</h1>
+                <div class="course-meta">
+                    <div class="course-meta-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Duration: 6 Months</span>
+                    </div>
+                    <div class="course-meta-item">
+                        <i class="fas fa-certificate"></i>
+                        <span>Certification Available</span>
+                    </div>
+                    <div class="course-meta-item">
+                        <i class="fas fa-user-graduate"></i>
+                        <span>Level: Beginner to Advanced</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="course-content-grid">
+                    <div class="main-content">
+                        <h2>About This Course</h2>
+                        <p style="margin-bottom: 2rem;">
+                            This is a comprehensive course designed to provide you with in-depth knowledge and practical skills. 
+                            Whether you are a beginner or looking to upgrade your skills, this course covers everything you need to know.
+                        </p>
+                        
+                        <h3>What You Will Learn</h3>
+                        <ul class="features-list">
+                            <li><i class="fas fa-check-circle"></i> Core concepts and fundamentals</li>
+                            <li><i class="fas fa-check-circle"></i> Practical applications and real-world projects</li>
+                            <li><i class="fas fa-check-circle"></i> Industry-standard tools and techniques</li>
+                            <li><i class="fas fa-check-circle"></i> Advanced topics and specialization</li>
+                        </ul>
+
+                        <h3 style="margin-top: 3rem;">Course Curriculum</h3>
+                        <ul class="curriculum-list">
+                            <li>
+                                <span><i class="fas fa-play-circle" style="margin-right: 10px; color: var(--secondary-color);"></i> Module 1: Introduction</span>
+                                <span style="color: #888;">2h 15m</span>
+                            </li>
+                            <li>
+                                <span><i class="fas fa-play-circle" style="margin-right: 10px; color: var(--secondary-color);"></i> Module 2: Core Concepts</span>
+                                <span style="color: #888;">3h 45m</span>
+                            </li>
+                            <li>
+                                <span><i class="fas fa-play-circle" style="margin-right: 10px; color: var(--secondary-color);"></i> Module 3: Advanced Techniques</span>
+                                <span style="color: #888;">4h 20m</span>
+                            </li>
+                            <li>
+                                <span><i class="fas fa-play-circle" style="margin-right: 10px; color: var(--secondary-color);"></i> Module 4: Final Project</span>
+                                <span style="color: #888;">5h 00m</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar">
+                        <div class="sidebar-card">
+                            <h3 style="margin-bottom: 1.5rem; color: var(--primary-color);">Course Features</h3>
+                            <ul class="features-list" style="margin-top: 0; font-size: 0.95rem;">
+                                <li><i class="fas fa-video"></i> 20+ Hours of Content</li>
+                                <li><i class="fas fa-file-alt"></i> Study Materials</li>
+                                <li><i class="fas fa-infinity"></i> Lifetime Access</li>
+                                <li><i class="fas fa-mobile-alt"></i> Access on Mobile</li>
+                            </ul>
+                            <a href="index.html#contact" class="btn btn-primary btn-block" style="margin-top: 2rem; text-align: center;">Enquire Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section cta-section">
+            <div class="container">
+                <h2>Ready to Start?</h2>
+                <p>Take the first step towards your new career today.</p>
+                <a href="index.html#contact" class="btn btn-light">Contact Us</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column footer-brand">
+                    <a href="index.html" class="footer-logo-link">
+                        <img src="assets/logo.jpg" alt="ULP Academy Logo" class="footer-logo-img">
+                        <h3>ULP Academy</h3>
+                    </a>
+                    <p>Learn by the unique way of Teaching. Empowering students to achieve excellence.</p>
+                </div>
+
+                <div class="footer-column footer-links-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links-list">
+                        <li><a href="index.html#home">Home</a></li>
+                        <li><a href="index.html#about">About Us</a></li>
+                        <li><a href="index.html#courses">Tuitions</a></li>
+                        <li><a href="courses.html">University Courses</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column footer-contact">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-list">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>
+                                A-589, Block A, Palam Vihar,<br>
+                                Gurgaon, Haryana 122017<br>
+                                India
+                            </span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone-alt"></i>
+                            <div class="footer-phones">
+                                <a href="tel:8447448370">8447448370</a>
+                                <a href="tel:9988993348">9988993348</a>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:ulpacademy.official@gmail.com">ulpacademy.official@gmail.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                &copy; 2024 ULP Academy. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
