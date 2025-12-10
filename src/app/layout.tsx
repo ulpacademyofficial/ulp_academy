@@ -22,6 +22,9 @@ export const metadata: Metadata = {
   title: "ULP Academy - Learn by the Unique Way of Teaching",
   description:
     "ULP Academy offers premium tuition for classes 10th and 12th in Math, Science, English, and Accounts. Join us for a unique learning experience.",
+  icons: {
+    icon: "/logo.jpg",
+  },
 };
 
 export default function RootLayout({
@@ -33,7 +36,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.variable} ${outfit.variable} antialiased`}>
         <Header />
-        <main>{children}</main>
+        <main className="pt-20">{children}</main>
         <Footer />
       </body>
     </html>

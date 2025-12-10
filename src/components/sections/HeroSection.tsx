@@ -20,7 +20,7 @@ export default function HeroSection({
   return (
     <section
       className={`${
-        isDefault ? "min-h-screen" : "min-h-[50vh]"
+        isDefault ? "min-h-[90vh]" : "min-h-[50vh]"
       } hero-bg flex items-center justify-center text-center text-white pt-20`}
     >
       <div className="max-w-4xl mx-auto px-4 md:px-8">
