@@ -180,7 +180,7 @@ export default function LeadFormModal({ onClose }: LeadFormModalProps) {
           {/* Name */}
           <div>
             <label className="block text-sm font-medium text-[#0a192f] mb-1">
-              आपका नाम <span className="text-red-500">*</span>
+              Name <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
