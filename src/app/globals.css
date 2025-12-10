@@ -1,0 +1,134 @@
+@import "tailwindcss";
+
+/* Custom CSS Variables - ULP Academy Theme */
+:root {
+  /* Colors */
+  --color-primary: #0a192f;
+  --color-secondary: #fca311;
+  --color-accent: #14213d;
+  --color-text-light: #e5e5e5;
+  --color-text-dark: #1a1a1a;
+  --color-white: #ffffff;
+  --color-gray: #f3f4f6;
+  
+  /* Semantic */
+  --background: var(--color-white);
+  --foreground: var(--color-text-dark);
+}
+
+/* Tailwind Theme */
+@theme inline {
+  /* Colors */
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
+  --color-accent: var(--color-accent);
+  --color-gray: var(--color-gray);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  
+  /* Fonts */
+  --font-heading: var(--font-poppins);
+  --font-body: var(--font-outfit);
+  
+  /* Transitions */
+  --transition-default: all 0.3s ease;
+}
+
+/* Base Styles */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  font-family: var(--font-outfit), sans-serif;
+  color: var(--color-text-dark);
+  line-height: 1.6;
+  background-color: var(--color-white);
+  overflow-x: hidden;
+}
+
+/* Utility Classes */
+.text-highlight {
+  color: var(--color-secondary);
+}
+
+/* Section Base */
+.section {
+  @apply py-20;
+}
+
+/* FAQ Accordion Animation */
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+}
+
+.faq-item.active .faq-answer {
+  max-height: 500px;
+  padding-top: 1rem;
+}
+
+.faq-item.active .faq-icon {
+  transform: rotate(180deg);
+}
+
+.faq-icon {
+  transition: transform 0.3s ease;
+}
+
+/* Hero Background */
+.hero-bg {
+  background: linear-gradient(rgba(10, 25, 47, 0.85), rgba(10, 25, 47, 0.75)), url('/hero-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.courses-hero-bg {
+  background: linear-gradient(rgba(10, 25, 47, 0.85), rgba(10, 25, 47, 0.75)), url('/hero-bg.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.contact-hero-bg {
+  background: linear-gradient(rgba(10, 25, 47, 0.85), rgba(10, 25, 47, 0.75)), url('/hero-bg.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.cta-bg {
+  background: linear-gradient(rgba(10, 25, 47, 0.9), rgba(10, 25, 47, 0.9)), url('/cta-bg.png');
+  background-size: cover;
+  background-position: center;
+}
+
+/* Mobile Navigation Animation */
+.nav-list-mobile {
+  transform: translateY(-150%);
+  transition: transform 0.3s ease;
+}
+
+.nav-list-mobile.active {
+  transform: translateY(0);
+}
+
+/* Scroll Reveal Animation */
+.reveal-element {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease-out;
+}
+
+.reveal-element.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Responsive Mobile Navigation */
+@media (max-width: 768px) {
+  .hero-bg {
+    background-attachment: scroll;
+  }
+}
