@@ -50,6 +50,14 @@ export default function LeadFormModal({ onClose }: LeadFormModalProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
+
   const showCourseDropdown =
     formData.degree === "graduation" || formData.degree === "post-graduation";
 
