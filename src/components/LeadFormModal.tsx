@@ -159,10 +159,10 @@ export default function LeadFormModal({ onClose }: LeadFormModalProps) {
             </svg>
           </div>
           <h3 className="text-2xl font-bold text-[#0a192f] mb-2">
-            धन्यवाद! 🎉
+            Form Submitted! 🎉
           </h3>
           <p className="text-gray-600">
-            हमारी team जल्द ही आपसे संपर्क करेगी।
+            Our team will contact you within 24 hours.
           </p>
         </div>
       </div>
@@ -184,10 +184,10 @@ export default function LeadFormModal({ onClose }: LeadFormModalProps) {
             </svg>
           </div>
           <h2 className="font-[family-name:var(--font-poppins)] text-2xl font-bold text-[#0a192f]">
-            Free Counselling पाएं! 🎓
+            Fill Your Details 📝
           </h2>
           <p className="text-gray-600 mt-1">
-            अपनी details भरें और expert guidance पाएं
+            Please fill the form below
           </p>
         </div>
 
@@ -291,7 +291,7 @@ export default function LeadFormModal({ onClose }: LeadFormModalProps) {
           <button
             type="submit"
             disabled={!isFormValid || isSubmitting}
-            className="w-full bg-[#fca311] text-[#0a192f] py-4 rounded-lg font-bold text-lg hover:bg-[#e5940c] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-full bg-[#fca311] text-[#0a192f] py-4 rounded-lg font-bold text-lg hover:bg-[#e5940c] transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {isSubmitting ? (
               <>
@@ -318,7 +318,7 @@ export default function LeadFormModal({ onClose }: LeadFormModalProps) {
               </>
             ) : (
               <>
-                Get Free Counselling
+                Submit Details
                 <svg
                   className="w-5 h-5"
                   fill="currentColor"
