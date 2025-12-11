@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import { getTimeAgo, formatDateTime } from "@/utils/dateUtils";
 
 interface Lead {
   _id: string;
@@ -75,15 +76,7 @@ export default function LeadDetailPage() {
     }
   };
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-IN", {
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
+
 
   const getDegreeLabel = (degree: string) => {
     const labels: Record<string, string> = {
@@ -95,17 +88,7 @@ export default function LeadDetailPage() {
     return labels[degree] || degree;
   };
 
-  const getTimeAgo = (dateString: string) => {
-    const now = new Date();
-    const date = new Date(dateString);
-    const diffMs = now.getTime() - date.getTime();
-    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
-    const diffDays = Math.floor(diffHours / 24);
 
-    if (diffDays > 0) return `${diffDays} day${diffDays > 1 ? "s" : ""} ago`;
-    if (diffHours > 0) return `${diffHours} hour${diffHours > 1 ? "s" : ""} ago`;
-    return "Just now";
-  };
 
   const updateStatus = async (newStatus: "pending" | "done") => {
     if (!lead || updatingStatus) return;
@@ -408,13 +391,13 @@ export default function LeadDetailPage() {
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span>Created: {formatDate(lead.createdAt)}</span>
+                <span title={formatDateTime(lead.createdAt)}>Created: {getTimeAgo(lead.createdAt)}</span>
               </div>
               <div className="flex items-center gap-2">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                 </svg>
-                <span>Updated: {formatDate(lead.updatedAt)}</span>
+                <span title={formatDateTime(lead.updatedAt)}>Updated: {getTimeAgo(lead.updatedAt)}</span>
               </div>
             </div>
           </div>
@@ -439,14 +422,8 @@ export default function LeadDetailPage() {
                   {lead.notes.slice().reverse().map((noteItem, index) => (
                     <div key={index} className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
                       <p className="text-[#0a192f] whitespace-pre-wrap mb-2">{noteItem.text}</p>
-                      <p className="text-xs text-yellow-600">
-                        {new Date(noteItem.createdAt).toLocaleDateString("en-IN", {
-                          day: "2-digit",
-                          month: "short",
-                          year: "numeric",
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
+                      <p className="text-xs text-yellow-600" title={formatDateTime(noteItem.createdAt)}>
+                        {getTimeAgo(noteItem.createdAt)}
                       </p>
                     </div>
                   ))}

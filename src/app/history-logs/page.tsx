@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { getTimeAgo, formatDateTime } from "@/utils/dateUtils";
 
 interface Log {
   _id: string;
@@ -38,7 +39,9 @@ export default function HistoryLogsPage() {
   // Check authentication
   useEffect(() => {
     const isAuth = sessionStorage.getItem("leads_authenticated") === "true";
-    if (!isAuth) {
+    const username = sessionStorage.getItem("leads_username");
+    
+    if (!isAuth || username !== "sachin") {
       router.push("/leads");
     } else {
       setIsAuthenticated(true);
@@ -81,16 +84,6 @@ export default function HistoryLogsPage() {
 
   const handlePageChange = (newPage: number) => {
     fetchLogs(newPage, activeTab);
-  };
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleString("en-IN", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
   };
 
   const getActionLabel = (action: string) => {
@@ -234,8 +227,8 @@ export default function HistoryLogsPage() {
                         <td className="px-6 py-4 text-sm text-gray-500 font-mono">
                           {log.ip || "-"}
                         </td>
-                        <td className="px-6 py-4 text-sm text-gray-500">
-                          {formatDate(log.createdAt)}
+                        <td className="px-6 py-4 text-sm text-gray-500" title={formatDateTime(log.createdAt)}>
+                          {getTimeAgo(log.createdAt)}
                         </td>
                       </tr>
                     ))}

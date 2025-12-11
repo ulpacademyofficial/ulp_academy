@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { getTimeAgo, formatDateTime } from "@/utils/dateUtils";
 
 interface Lead {
   _id: string;
@@ -55,6 +56,8 @@ export default function LeadsPage() {
       if (response.ok && data.success) {
         setIsAuthenticated(true);
         sessionStorage.setItem("leads_authenticated", "true");
+        // Store username to control access to restricted pages
+        sessionStorage.setItem("leads_username", data.user?.username || credentials.username);
       } else {
         setAuthError(data.message || "Invalid username or password");
       }
@@ -97,15 +100,7 @@ export default function LeadsPage() {
     }
   };
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-IN", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
+
 
   const getDegreeLabel = (degree: string) => {
     const labels: Record<string, string> = {
@@ -134,6 +129,7 @@ export default function LeadsPage() {
     
     setIsAuthenticated(false);
     sessionStorage.removeItem("leads_authenticated");
+    sessionStorage.removeItem("leads_username");
     setLeads([]);
   };
 
@@ -261,6 +257,9 @@ export default function LeadsPage() {
     );
   }
 
+  // Check if current user is admin (sachin)
+  const isSachin = typeof window !== "undefined" && sessionStorage.getItem("leads_username") === "sachin";
+
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
@@ -275,15 +274,17 @@ export default function LeadsPage() {
             </p>
           </div>
           <div className="flex items-center gap-3">
-            <button
-              onClick={() => router.push("/history-logs")}
-              className="flex items-center gap-2 bg-[#0a192f] text-white px-4 py-2 rounded-lg hover:bg-[#14213d] transition-colors cursor-pointer"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              Logs
-            </button>
+            {isSachin && (
+              <button
+                onClick={() => router.push("/history-logs")}
+                className="flex items-center gap-2 bg-[#0a192f] text-white px-4 py-2 rounded-lg hover:bg-[#14213d] transition-colors cursor-pointer"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Logs
+              </button>
+            )}
             <button
               onClick={handleLogout}
               className="flex items-center gap-2 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors cursor-pointer"
@@ -368,8 +369,8 @@ export default function LeadsPage() {
                           {lead.status === "done" ? "Done" : "Pending"}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-sm text-gray-500">
-                        {formatDate(lead.createdAt)}
+                      <td className="px-6 py-4 text-sm text-gray-500" title={formatDateTime(lead.createdAt)}>
+                        {getTimeAgo(lead.createdAt)}
                       </td>
                     </tr>
                   ))}
