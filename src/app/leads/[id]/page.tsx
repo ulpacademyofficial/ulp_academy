@@ -41,7 +41,6 @@ export default function LeadDetailPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Check authentication
     const isAuth = sessionStorage.getItem("leads_authenticated") === "true";
     if (!isAuth) {
       router.push("/leads");
@@ -91,9 +90,21 @@ export default function LeadDetailPage() {
     return labels[degree] || degree;
   };
 
+  const getTimeAgo = (dateString: string) => {
+    const now = new Date();
+    const date = new Date(dateString);
+    const diffMs = now.getTime() - date.getTime();
+    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+    const diffDays = Math.floor(diffHours / 24);
+
+    if (diffDays > 0) return `${diffDays} day${diffDays > 1 ? "s" : ""} ago`;
+    if (diffHours > 0) return `${diffHours} hour${diffHours > 1 ? "s" : ""} ago`;
+    return "Just now";
+  };
+
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#fca311] mx-auto mb-4"></div>
           <p className="text-gray-600">Loading lead details...</p>
@@ -104,7 +115,7 @@ export default function LeadDetailPage() {
 
   if (error || !lead) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100">
         <div className="text-center bg-white p-8 rounded-xl shadow-lg">
           <h2 className="text-xl font-bold text-gray-800 mb-2">Error</h2>
           <p className="text-gray-600 mb-4">{error || "Lead not found"}</p>
@@ -120,107 +131,156 @@ export default function LeadDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-4xl mx-auto px-4 md:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8">
+      <div className="max-w-5xl mx-auto px-4 md:px-8">
         {/* Header */}
-        <div className="mb-6 flex items-center justify-between">
+        <div className="mb-6">
           <Link
             href="/leads"
-            className="flex items-center gap-2 text-[#0a192f] hover:text-[#fca311] transition-colors"
+            className="inline-flex items-center gap-2 text-gray-600 hover:text-[#0a192f] transition-colors text-sm"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
             Back to Leads
           </Link>
         </div>
 
-        {/* Lead Card */}
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-          {/* Header */}
-          <div className="bg-[#0a192f] text-white p-6">
-            <h1 className="font-[family-name:var(--font-poppins)] text-2xl font-bold">{lead.name}</h1>
-            <p className="text-gray-300 mt-1">Submitted on {formatDate(lead.createdAt)}</p>
+        {/* Main Card */}
+        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+          {/* Header with gradient */}
+          <div className="bg-gradient-to-r from-[#0a192f] to-[#14213d] text-white p-8">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+              <div>
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-12 h-12 bg-[#fca311] rounded-full flex items-center justify-center text-[#0a192f] font-bold text-xl">
+                    {lead.name.charAt(0).toUpperCase()}
+                  </div>
+                  <div>
+                    <h1 className="font-[family-name:var(--font-poppins)] text-2xl font-bold">{lead.name}</h1>
+                    <p className="text-gray-300 text-sm">{getTimeAgo(lead.createdAt)}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#fca311] text-[#0a192f]">
+                  {getDegreeLabel(lead.degree)}
+                </span>
+                {lead.course && (
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white/20 text-white">
+                    {lead.course}
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Quick Actions */}
+          <div className="bg-gray-50 border-b px-8 py-4">
+            <div className="flex flex-wrap gap-3">
+              <a
+                href={`tel:${lead.phone}`}
+                className="inline-flex items-center gap-2 bg-[#27ae60] text-white px-5 py-2.5 rounded-lg font-medium hover:bg-[#219a52] transition-colors"
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                </svg>
+                Call Now
+              </a>
+              <a
+                href={`https://wa.me/91${lead.phone}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-[#25D366] text-white px-5 py-2.5 rounded-lg font-medium hover:bg-[#128C7E] transition-colors"
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                </svg>
+                WhatsApp
+              </a>
+              <a
+                href={`mailto:${lead.email}`}
+                className="inline-flex items-center gap-2 bg-[#2980b9] text-white px-5 py-2.5 rounded-lg font-medium hover:bg-[#1a5276] transition-colors"
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                </svg>
+                Send Email
+              </a>
+            </div>
           </div>
 
           {/* Content */}
-          <div className="p-6 space-y-6">
-            {/* Contact Info */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <InfoCard
-                icon={
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                  </svg>
-                }
-                label="Email"
-                value={lead.email}
-                href={`mailto:${lead.email}`}
-              />
-              <InfoCard
-                icon={
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                  </svg>
-                }
-                label="Phone"
-                value={lead.phone}
-                href={`tel:${lead.phone}`}
-              />
+          <div className="p-8">
+            {/* Contact Info Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+              <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-5 rounded-xl border border-blue-200">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center text-white">
+                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                      <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-sm text-blue-600 font-medium">Email Address</p>
+                    <p className="font-semibold text-[#0a192f]">{lead.email}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-gradient-to-br from-green-50 to-green-100 p-5 rounded-xl border border-green-200">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center text-white">
+                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-sm text-green-600 font-medium">Phone Number</p>
+                    <p className="font-semibold text-[#0a192f]">{lead.phone}</p>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Course Info */}
-            <div>
-              <h3 className="text-lg font-semibold text-[#0a192f] mb-3">Course Information</h3>
+            <div className="mb-8">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                  <svg className="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-[#0a192f]">Course Information</h3>
+              </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <p className="text-sm text-gray-500">Degree Level</p>
-                  <p className="font-semibold text-[#0a192f]">{getDegreeLabel(lead.degree)}</p>
-                </div>
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <p className="text-sm text-gray-500">Course</p>
-                  <p className="font-semibold text-[#0a192f]">{lead.course || "-"}</p>
-                </div>
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <p className="text-sm text-gray-500">Source</p>
-                  <p className="font-semibold text-[#0a192f]">{lead.source}</p>
-                </div>
+                <DetailCard label="Degree Level" value={getDegreeLabel(lead.degree)} />
+                <DetailCard label="Course" value={lead.course || "-"} />
+                <DetailCard label="Source" value={lead.source} />
               </div>
             </div>
 
             {/* Location Info */}
             {lead.geolocation && (
-              <div>
-                <h3 className="text-lg font-semibold text-[#0a192f] mb-3">Location Information</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <p className="text-sm text-gray-500">IP Address</p>
-                    <p className="font-semibold text-[#0a192f]">{lead.geolocation.ip || "-"}</p>
+              <div className="mb-8">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
+                    <svg className="w-4 h-4 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                    </svg>
                   </div>
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <p className="text-sm text-gray-500">City</p>
-                    <p className="font-semibold text-[#0a192f]">{lead.geolocation.city || "-"}</p>
-                  </div>
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <p className="text-sm text-gray-500">Region</p>
-                    <p className="font-semibold text-[#0a192f]">{lead.geolocation.region || "-"}</p>
-                  </div>
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <p className="text-sm text-gray-500">Country</p>
-                    <p className="font-semibold text-[#0a192f]">{lead.geolocation.country_name || "-"}</p>
-                  </div>
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <p className="text-sm text-gray-500">Postal Code</p>
-                    <p className="font-semibold text-[#0a192f]">{lead.geolocation.postal || "-"}</p>
-                  </div>
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <p className="text-sm text-gray-500">Timezone</p>
-                    <p className="font-semibold text-[#0a192f]">{lead.geolocation.timezone || "-"}</p>
-                  </div>
-                  <div className="bg-gray-50 p-4 rounded-lg col-span-1 md:col-span-2">
-                    <p className="text-sm text-gray-500">ISP / Organization</p>
-                    <p className="font-semibold text-[#0a192f]">{lead.geolocation.org || "-"}</p>
+                  <h3 className="text-lg font-semibold text-[#0a192f]">Location Information</h3>
+                </div>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <DetailCard label="IP Address" value={lead.geolocation.ip || "-"} />
+                  <DetailCard label="City" value={lead.geolocation.city || "-"} />
+                  <DetailCard label="Region" value={lead.geolocation.region || "-"} />
+                  <DetailCard label="Country" value={lead.geolocation.country_name || "-"} />
+                  <DetailCard label="Postal Code" value={lead.geolocation.postal || "-"} />
+                  <DetailCard label="Timezone" value={lead.geolocation.timezone || "-"} />
+                  <div className="col-span-2">
+                    <DetailCard label="ISP / Organization" value={lead.geolocation.org || "-"} />
                   </div>
                 </div>
               </div>
@@ -228,42 +288,47 @@ export default function LeadDetailPage() {
 
             {/* Device Info */}
             {lead.deviceInfo && (
-              <div>
-                <h3 className="text-lg font-semibold text-[#0a192f] mb-3">Device Information</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <p className="text-sm text-gray-500">Browser</p>
-                    <p className="font-semibold text-[#0a192f]">
-                      {lead.deviceInfo.browser?.name || "-"}
-                      {lead.deviceInfo.browser?.version && ` v${lead.deviceInfo.browser.version}`}
-                    </p>
+              <div className="mb-8">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-8 h-8 bg-cyan-100 rounded-lg flex items-center justify-center">
+                    <svg className="w-4 h-4 text-cyan-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-2.22l.123.489.804.804A1 1 0 0113 18H7a1 1 0 01-.707-1.707l.804-.804L7.22 15H5a2 2 0 01-2-2V5zm5.771 7H5V5h10v7H8.771z" clipRule="evenodd" />
+                    </svg>
                   </div>
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <p className="text-sm text-gray-500">Operating System</p>
-                    <p className="font-semibold text-[#0a192f]">
-                      {lead.deviceInfo.os?.name || "-"}
-                      {lead.deviceInfo.os?.version && ` ${lead.deviceInfo.os.version}`}
-                    </p>
-                  </div>
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <p className="text-sm text-gray-500">Device</p>
-                    <p className="font-semibold text-[#0a192f]">
-                      {lead.deviceInfo.device?.vendor || "-"}
-                      {lead.deviceInfo.device?.model && ` ${lead.deviceInfo.device.model}`}
-                    </p>
-                  </div>
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <p className="text-sm text-gray-500">CPU Architecture</p>
-                    <p className="font-semibold text-[#0a192f]">{lead.deviceInfo.cpu?.architecture || "-"}</p>
-                  </div>
+                  <h3 className="text-lg font-semibold text-[#0a192f]">Device Information</h3>
+                </div>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <DetailCard
+                    label="Browser"
+                    value={`${lead.deviceInfo.browser?.name || "-"}${lead.deviceInfo.browser?.version ? ` v${lead.deviceInfo.browser.version}` : ""}`}
+                  />
+                  <DetailCard
+                    label="Operating System"
+                    value={`${lead.deviceInfo.os?.name || "-"}${lead.deviceInfo.os?.version ? ` ${lead.deviceInfo.os.version}` : ""}`}
+                  />
+                  <DetailCard
+                    label="Device"
+                    value={`${lead.deviceInfo.device?.vendor || "-"}${lead.deviceInfo.device?.model ? ` ${lead.deviceInfo.device.model}` : ""}`}
+                  />
+                  <DetailCard label="CPU Architecture" value={lead.deviceInfo.cpu?.architecture || "-"} />
                 </div>
               </div>
             )}
 
             {/* Timestamps */}
-            <div className="border-t pt-4 text-sm text-gray-500">
-              <p>Created: {formatDate(lead.createdAt)}</p>
-              <p>Last Updated: {formatDate(lead.updatedAt)}</p>
+            <div className="border-t border-gray-200 pt-6 flex flex-wrap gap-6 text-sm text-gray-500">
+              <div className="flex items-center gap-2">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>Created: {formatDate(lead.createdAt)}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                <span>Updated: {formatDate(lead.updatedAt)}</span>
+              </div>
             </div>
           </div>
         </div>
@@ -272,32 +337,11 @@ export default function LeadDetailPage() {
   );
 }
 
-function InfoCard({
-  icon,
-  label,
-  value,
-  href,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  value: string;
-  href?: string;
-}) {
+function DetailCard({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex items-center gap-4 bg-gray-50 p-4 rounded-lg">
-      <div className="w-10 h-10 bg-[#fca311] rounded-full flex items-center justify-center text-[#0a192f]">
-        {icon}
-      </div>
-      <div>
-        <p className="text-sm text-gray-500">{label}</p>
-        {href ? (
-          <a href={href} className="font-semibold text-[#0a192f] hover:text-[#fca311] transition-colors">
-            {value}
-          </a>
-        ) : (
-          <p className="font-semibold text-[#0a192f]">{value}</p>
-        )}
-      </div>
+    <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 hover:bg-gray-100 transition-colors">
+      <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">{label}</p>
+      <p className="font-semibold text-[#0a192f] text-sm">{value}</p>
     </div>
   );
 }
