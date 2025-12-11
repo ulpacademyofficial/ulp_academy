@@ -12,6 +12,8 @@ interface Lead {
   degree: string;
   course?: string;
   source: string;
+  status: "pending" | "done";
+  notes?: { text: string; createdAt: string }[];
   deviceInfo?: {
     browser?: { name?: string; version?: string };
     os?: { name?: string; version?: string };
@@ -39,6 +41,9 @@ export default function LeadDetailPage() {
   const [lead, setLead] = useState<Lead | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [updatingStatus, setUpdatingStatus] = useState(false);
+  const [notes, setNotes] = useState("");
+  const [savingNotes, setSavingNotes] = useState(false);
 
   useEffect(() => {
     const isAuth = sessionStorage.getItem("leads_authenticated") === "true";
@@ -102,6 +107,54 @@ export default function LeadDetailPage() {
     return "Just now";
   };
 
+  const updateStatus = async (newStatus: "pending" | "done") => {
+    if (!lead || updatingStatus) return;
+    
+    setUpdatingStatus(true);
+    try {
+      const response = await fetch(`/api/leads/${lead._id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status: newStatus }),
+      });
+
+      if (response.ok) {
+        setLead({ ...lead, status: newStatus });
+      }
+    } catch (err) {
+      console.error("Failed to update status:", err);
+    } finally {
+      setUpdatingStatus(false);
+    }
+  };
+
+  const saveNotes = async () => {
+    if (!lead || savingNotes) return;
+    
+    setSavingNotes(true);
+    try {
+      const response = await fetch(`/api/leads/${lead._id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ note: notes }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setLead(data.data);
+        setNotes(""); // Clear input after saving
+      }
+    } catch (err) {
+      console.error("Failed to save notes:", err);
+    } finally {
+      setSavingNotes(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100">
@@ -162,16 +215,20 @@ export default function LeadDetailPage() {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-wrap gap-2">
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#fca311] text-[#0a192f]">
-                  {getDegreeLabel(lead.degree)}
-                </span>
-                {lead.course && (
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white/20 text-white">
-                    {lead.course}
-                  </span>
-                )}
-              </div>
+              {/* Status Dropdown */}
+              <select
+                value={lead.status || "pending"}
+                onChange={(e) => updateStatus(e.target.value as "pending" | "done")}
+                disabled={updatingStatus}
+                className={`px-5 py-2.5 rounded-xl text-base font-semibold cursor-pointer border-0 outline-none transition-colors ${
+                  lead.status === "done"
+                    ? "bg-green-500 text-white"
+                    : "bg-orange-500 text-white"
+                } ${updatingStatus ? "opacity-50" : ""}`}
+              >
+                <option value="pending" className="bg-white text-gray-800">Pending</option>
+                <option value="done" className="bg-white text-gray-800">Done</option>
+              </select>
             </div>
           </div>
 
@@ -254,10 +311,9 @@ export default function LeadDetailPage() {
                 </div>
                 <h3 className="text-lg font-semibold text-[#0a192f]">Course Information</h3>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <DetailCard label="Degree Level" value={getDegreeLabel(lead.degree)} />
                 <DetailCard label="Course" value={lead.course || "-"} />
-                <DetailCard label="Source" value={lead.source} />
               </div>
             </div>
 
@@ -329,6 +385,68 @@ export default function LeadDetailPage() {
                 </svg>
                 <span>Updated: {formatDate(lead.updatedAt)}</span>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Notes Card - Separate */}
+        <div className="bg-white rounded-2xl shadow-xl overflow-hidden mt-6">
+          <div className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white p-6">
+            <div className="flex items-center gap-3">
+              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+              </svg>
+              <h2 className="text-xl font-bold">Notes</h2>
+            </div>
+          </div>
+          <div className="p-6">
+            {/* Saved Notes Display */}
+            {lead.notes && lead.notes.length > 0 && (
+              <div className="mb-6 space-y-3">
+                <p className="text-xs text-gray-500 font-medium uppercase tracking-wider">Previous Notes ({lead.notes.length})</p>
+                <div className="space-y-3 max-h-80 overflow-y-auto">
+                  {lead.notes.slice().reverse().map((noteItem, index) => (
+                    <div key={index} className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
+                      <p className="text-[#0a192f] whitespace-pre-wrap mb-2">{noteItem.text}</p>
+                      <p className="text-xs text-yellow-600">
+                        {new Date(noteItem.createdAt).toLocaleDateString("en-IN", {
+                          day: "2-digit",
+                          month: "short",
+                          year: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Add New Note */}
+            <div className="space-y-3">
+              <p className="text-sm font-medium text-gray-700">Add New Note</p>
+              <textarea
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                placeholder="Write a new note..."
+                rows={3}
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#fca311] focus:border-transparent outline-none resize-none text-[#0a192f]"
+              />
+              <button
+                onClick={saveNotes}
+                disabled={savingNotes}
+                className="bg-[#fca311] text-[#0a192f] px-6 py-2.5 rounded-lg font-semibold hover:bg-[#e5940c] transition-colors disabled:opacity-50 flex items-center gap-2"
+              >
+                {savingNotes ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#0a192f]"></div>
+                    Saving...
+                  </>
+                ) : (
+                  "Save Note"
+                )}
+              </button>
             </div>
           </div>
         </div>

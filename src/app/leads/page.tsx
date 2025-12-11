@@ -11,6 +11,7 @@ interface Lead {
   degree: string;
   course?: string;
   source: string;
+  status?: "pending" | "done";
   deviceInfo?: {
     browser?: { name?: string; version?: string };
     os?: { name?: string; version?: string };
@@ -305,6 +306,7 @@ export default function LeadsPage() {
                     <th className="px-6 py-4 text-left text-sm font-semibold">Phone</th>
                     <th className="px-6 py-4 text-left text-sm font-semibold">Degree</th>
                     <th className="px-6 py-4 text-left text-sm font-semibold">Location</th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold">Status</th>
                     <th className="px-6 py-4 text-left text-sm font-semibold">Date</th>
                   </tr>
                 </thead>
@@ -331,6 +333,15 @@ export default function LeadsPage() {
                         {lead.geolocation?.city && lead.geolocation?.country_name
                           ? `${lead.geolocation.city}, ${lead.geolocation.country_name}`
                           : "-"}
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                          lead.status === "done"
+                            ? "bg-green-100 text-green-800"
+                            : "bg-orange-100 text-orange-800"
+                        }`}>
+                          {lead.status === "done" ? "✅ Done" : "⏳ Pending"}
+                        </span>
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-500">
                         {formatDate(lead.createdAt)}

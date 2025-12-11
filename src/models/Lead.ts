@@ -31,6 +31,11 @@ export interface IGeolocation {
   org?: string;
 }
 
+export interface INote {
+  text: string;
+  createdAt: Date;
+}
+
 export interface ILead extends Document {
   name: string;
   email: string;
@@ -38,6 +43,8 @@ export interface ILead extends Document {
   degree: string;
   course?: string;
   source: string;
+  status: "pending" | "done";
+  notes: INote[];
   deviceInfo?: IDeviceInfo;
   geolocation?: IGeolocation;
   createdAt: Date;
@@ -75,6 +82,17 @@ const LeadSchema = new Schema<ILead>(
       type: String,
       default: "nios-open-board",
     },
+    status: {
+      type: String,
+      enum: ["pending", "done"],
+      default: "pending",
+    },
+    notes: [
+      {
+        text: { type: String, required: true },
+        createdAt: { type: Date, default: Date.now },
+      },
+    ],
     deviceInfo: {
       type: Schema.Types.Mixed,
       default: null,
