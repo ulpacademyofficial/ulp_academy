@@ -1,10 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/mongodb";
 import Log from "@/models/Log";
+import { getIp } from "@/utils/getIp";
 
-// Admin credentials - in production, use environment variables and proper hashing
-const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "admin";
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "ulp@2024";
+// Define allowed users
+const ALLOWED_USERS = [
+  { username: "sachin", password: process.env.SACHIN_PASSWORD || "admin@1215" },
+  { username: "manohar", password: process.env.MANOHAR_PASSWORD || "manohar@ulp2025" },
+  { username: "ulp_caller", password: process.env.ULP_CALLER_PASSWORD || "adminulp@2025" },
+];
+
+// Fallback for existing admin user if needed, or migration support
+// Removed: const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "admin";
+// Removed: const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "ulp@2024";
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,10 +29,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check credentials
-    if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+    // Check against allowed users
+    const user = ALLOWED_USERS.find(
+      (u) => u.username === username && u.password === password
+    );
+
+    if (user) {
       // Log successful login
-      const ip = request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || "unknown";
+      const ip = await getIp(request);
       const userAgent = request.headers.get("user-agent") || "unknown";
       await Log.create({
         type: "staff",
@@ -38,6 +50,7 @@ export async function POST(request: NextRequest) {
         {
           success: true,
           message: "Login successful",
+          user: { username },
         },
         { status: 200 }
       );

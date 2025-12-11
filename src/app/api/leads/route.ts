@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/mongodb";
 import Lead from "@/models/Lead";
 import Log from "@/models/Log";
+import { getIp } from "@/utils/getIp";
 
 export async function POST(request: NextRequest) {
   try {
@@ -33,7 +34,7 @@ export async function POST(request: NextRequest) {
       await existingLead.save();
 
       // Log lead update
-      const ip = request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || "unknown";
+      const ip = await getIp(request);
       const userAgent = request.headers.get("user-agent") || "unknown";
       await Log.create({
         type: "user",
@@ -67,7 +68,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Log new lead submission
-    const ip = request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || "unknown";
+    const ip = await getIp(request);
     const userAgent = request.headers.get("user-agent") || "unknown";
     await Log.create({
       type: "user",

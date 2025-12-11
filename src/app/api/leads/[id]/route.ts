@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/mongodb";
 import Lead from "@/models/Lead";
 import Log from "@/models/Log";
+import { getIp } from "@/utils/getIp";
 
 export async function GET(
   request: NextRequest,
@@ -126,7 +127,7 @@ export async function PATCH(
     }
 
     // Log the actions
-    const ip = request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || "unknown";
+    const ip = await getIp(request);
     const userAgent = request.headers.get("user-agent") || "unknown";
 
     if (status) {

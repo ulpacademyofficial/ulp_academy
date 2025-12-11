@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/mongodb";
 import Log from "@/models/Log";
+import { getIp } from "@/utils/getIp";
 
-// POST - Create a new log entry
+// POST - Create a new log (mainly for user actions from frontend)
+// POST - Create a new log (mainly for user actions from frontend)
 export async function POST(request: NextRequest) {
   try {
     await dbConnect();
@@ -25,10 +27,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Get IP and User Agent from headers
-    const ip = request.headers.get("x-forwarded-for") || 
-               request.headers.get("x-real-ip") || 
-               "unknown";
+    // Get IP using helper (handles localhost fallback)
+    const ip = await getIp(request);
     const userAgent = request.headers.get("user-agent") || "unknown";
 
     const log = await Log.create({

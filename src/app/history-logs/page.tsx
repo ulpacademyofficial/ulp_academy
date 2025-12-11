@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface Log {
   _id: string;
@@ -22,8 +23,10 @@ interface Pagination {
 }
 
 export default function HistoryLogsPage() {
+  const router = useRouter();
   const [logs, setLogs] = useState<Log[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeTab, setActiveTab] = useState<"all" | "user" | "staff">("all");
   const [pagination, setPagination] = useState<Pagination>({
     page: 1,
@@ -31,6 +34,16 @@ export default function HistoryLogsPage() {
     total: 0,
     totalPages: 0,
   });
+
+  // Check authentication
+  useEffect(() => {
+    const isAuth = sessionStorage.getItem("leads_authenticated") === "true";
+    if (!isAuth) {
+      router.push("/leads");
+    } else {
+      setIsAuthenticated(true);
+    }
+  }, [router]);
 
   const fetchLogs = async (page: number = 1, type?: string) => {
     try {
