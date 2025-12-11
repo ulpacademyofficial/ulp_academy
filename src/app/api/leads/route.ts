@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/mongodb";
 import Lead from "@/models/Lead";
+import Log from "@/models/Log";
 
 export async function POST(request: NextRequest) {
   try {
@@ -31,6 +32,18 @@ export async function POST(request: NextRequest) {
       if (geolocation) existingLead.geolocation = geolocation;
       await existingLead.save();
 
+      // Log lead update
+      const ip = request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || "unknown";
+      const userAgent = request.headers.get("user-agent") || "unknown";
+      await Log.create({
+        type: "user",
+        action: "lead_updated",
+        details: { name, email, phone, degree, course },
+        leadId: existingLead._id,
+        ip,
+        userAgent,
+      });
+
       return NextResponse.json(
         {
           success: true,
@@ -51,6 +64,18 @@ export async function POST(request: NextRequest) {
       source: "nios-open-board",
       deviceInfo: deviceInfo || undefined,
       geolocation: geolocation || undefined,
+    });
+
+    // Log new lead submission
+    const ip = request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || "unknown";
+    const userAgent = request.headers.get("user-agent") || "unknown";
+    await Log.create({
+      type: "user",
+      action: "lead_submitted",
+      details: { name, email, phone, degree, course },
+      leadId: lead._id,
+      ip,
+      userAgent,
     });
 
     return NextResponse.json(

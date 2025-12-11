@@ -117,7 +117,21 @@ export default function LeadsPage() {
     return labels[degree] || degree;
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    // Log logout action
+    try {
+      await fetch("/api/logs", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "staff",
+          action: "logout",
+        }),
+      });
+    } catch (err) {
+      console.error("Failed to log logout:", err);
+    }
+    
     setIsAuthenticated(false);
     sessionStorage.removeItem("leads_authenticated");
     setLeads([]);

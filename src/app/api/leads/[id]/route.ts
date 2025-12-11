@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/mongodb";
 import Lead from "@/models/Lead";
+import Log from "@/models/Log";
 
 export async function GET(
   request: NextRequest,
@@ -122,6 +123,32 @@ export async function PATCH(
         { success: false, message: "Lead not found" },
         { status: 404 }
       );
+    }
+
+    // Log the actions
+    const ip = request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || "unknown";
+    const userAgent = request.headers.get("user-agent") || "unknown";
+
+    if (status) {
+      await Log.create({
+        type: "staff",
+        action: "status_change",
+        details: { oldStatus: rawLead.status, newStatus: status, leadName: rawLead.name },
+        leadId: new ObjectId(id),
+        ip,
+        userAgent,
+      });
+    }
+
+    if (note && typeof note === "string" && note.trim()) {
+      await Log.create({
+        type: "staff",
+        action: "note_added",
+        details: { note: note.trim(), leadName: rawLead.name },
+        leadId: new ObjectId(id),
+        ip,
+        userAgent,
+      });
     }
 
     return NextResponse.json(
