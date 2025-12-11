@@ -7,7 +7,7 @@ export async function POST(request: NextRequest) {
     await dbConnect();
 
     const body = await request.json();
-    const { name, email, phone, degree, course } = body;
+    const { name, email, phone, degree, course, deviceInfo, geolocation } = body;
 
     // Validation
     if (!name || !email || !phone || !degree) {
@@ -27,6 +27,8 @@ export async function POST(request: NextRequest) {
       existingLead.name = name;
       existingLead.degree = degree;
       if (course) existingLead.course = course;
+      if (deviceInfo) existingLead.deviceInfo = deviceInfo;
+      if (geolocation) existingLead.geolocation = geolocation;
       await existingLead.save();
 
       return NextResponse.json(
@@ -47,6 +49,8 @@ export async function POST(request: NextRequest) {
       degree,
       course: course || undefined,
       source: "nios-open-board",
+      deviceInfo: deviceInfo || undefined,
+      geolocation: geolocation || undefined,
     });
 
     return NextResponse.json(

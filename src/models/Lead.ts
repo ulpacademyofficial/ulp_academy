@@ -1,5 +1,36 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 
+export interface IDeviceInfo {
+  browser?: {
+    name?: string;
+    version?: string;
+  };
+  os?: {
+    name?: string;
+    version?: string;
+  };
+  device?: {
+    model?: string;
+    type?: string;
+    vendor?: string;
+  };
+  cpu?: {
+    architecture?: string;
+  };
+}
+
+export interface IGeolocation {
+  ip?: string;
+  city?: string;
+  region?: string;
+  country_name?: string;
+  postal?: string;
+  latitude?: number;
+  longitude?: number;
+  timezone?: string;
+  org?: string;
+}
+
 export interface ILead extends Document {
   name: string;
   email: string;
@@ -7,6 +38,8 @@ export interface ILead extends Document {
   degree: string;
   course?: string;
   source: string;
+  deviceInfo?: IDeviceInfo;
+  geolocation?: IGeolocation;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -42,14 +75,25 @@ const LeadSchema = new Schema<ILead>(
       type: String,
       default: "nios-open-board",
     },
+    deviceInfo: {
+      type: Schema.Types.Mixed,
+      default: null,
+    },
+    geolocation: {
+      type: Schema.Types.Mixed,
+      default: null,
+    },
   },
   {
     timestamps: true,
   }
 );
 
-// Prevent model overwrite in development
-const Lead: Model<ILead> =
-  mongoose.models.Lead || mongoose.model<ILead>("Lead", LeadSchema);
+// Delete cached model in development to pick up schema changes
+if (mongoose.models.Lead) {
+  delete mongoose.models.Lead;
+}
+
+const Lead: Model<ILead> = mongoose.model<ILead>("Lead", LeadSchema);
 
 export default Lead;

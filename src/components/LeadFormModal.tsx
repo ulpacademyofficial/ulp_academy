@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { getTrackingData } from "@/lib/tracking";
 
 interface LeadFormModalProps {
   onClose: () => void;
@@ -85,13 +86,20 @@ export default function LeadFormModal({ onClose }: LeadFormModalProps) {
     setIsSubmitting(true);
 
     try {
-      // Send data to API
+      // Get tracking data (device info & geolocation)
+      const trackingData = await getTrackingData();
+
+      // Send data to API with tracking info
       const response = await fetch("/api/leads", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          deviceInfo: trackingData.deviceInfo,
+          geolocation: trackingData.geolocation,
+        }),
       });
 
       const result = await response.json();
