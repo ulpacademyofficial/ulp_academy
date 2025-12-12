@@ -112,6 +112,11 @@ export default function LeadFormModal({ onClose }: LeadFormModalProps) {
       localStorage.setItem("ulp_lead_submitted", "true");
       localStorage.setItem("ulp_lead_data", JSON.stringify(formData));
 
+      // Fire the Facebook Lead event
+      if (typeof window !== "undefined" && (window as unknown as { fbq?: (...args: unknown[]) => void }).fbq) {
+        (window as unknown as { fbq: (...args: unknown[]) => void }).fbq("track", "Lead");
+      }
+
       setShowSuccess(true);
 
       // Close modal after showing success
