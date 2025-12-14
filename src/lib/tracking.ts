@@ -108,3 +108,94 @@ export const getTrackingData = async () => {
     geolocation: geoResult.success ? geoResult.data : null,
   };
 };
+
+// Visitor ID management
+const VISITOR_ID_KEY = "ulp_visitor_id";
+
+export const getOrCreateVisitorId = (): string => {
+  if (typeof window === "undefined") {
+    return "";
+  }
+
+  let visitorId = localStorage.getItem(VISITOR_ID_KEY);
+  
+  if (!visitorId) {
+    // Generate a UUID v4 with VISITOR_ prefix and uppercase
+    const uuid = crypto.randomUUID().toUpperCase();
+    visitorId = `VISITOR_${uuid}`;
+    localStorage.setItem(VISITOR_ID_KEY, visitorId);
+  }
+  
+  return visitorId;
+};
+
+// Page info collection
+export interface PageInfo {
+  pageUrl: string;
+  queryParam: string;
+  pageSlug: string;
+  referrer: string;
+}
+
+export const getPageInfo = (): PageInfo => {
+  if (typeof window === "undefined") {
+    return { pageUrl: "", queryParam: "", pageSlug: "", referrer: "" };
+  }
+
+  const fullUrl = window.location.href;
+  const queryParam = window.location.search || "";
+  const pageSlug = window.location.pathname;
+
+  return {
+    pageUrl: fullUrl,
+    queryParam,
+    pageSlug,
+    referrer: document.referrer || "",
+  };
+};
+
+// Track page view event
+export const trackPageView = async (): Promise<{
+  success: boolean;
+  error?: string;
+}> => {
+  try {
+    const visitorId = getOrCreateVisitorId();
+    if (!visitorId) {
+      return { success: false, error: "Could not get visitor ID" };
+    }
+
+    const pageInfo = getPageInfo();
+    const trackingData = await getTrackingData();
+
+    const response = await fetch("/api/events", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        visitorId,
+        eventType: "pageView",
+        pageUrl: pageInfo.pageUrl,
+        queryParam: pageInfo.queryParam,
+        pageSlug: pageInfo.pageSlug,
+        referrer: pageInfo.referrer,
+        deviceInfo: trackingData.deviceInfo,
+        geolocation: trackingData.geolocation,
+      }),
+    });
+
+    if (!response.ok) {
+      const result = await response.json();
+      throw new Error(result.message || "Failed to track page view");
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error tracking page view:", error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Unknown error",
+    };
+  }
+};

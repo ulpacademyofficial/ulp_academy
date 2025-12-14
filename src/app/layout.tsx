@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Poppins, Outfit } from "next/font/google";
-import Script from "next/script";
+import { Suspense } from "react";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import PageViewTracker from "@/components/PageViewTracker";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -63,6 +64,9 @@ export default function RootLayout({
         End Meta Pixel Code */}
       </head>
       <body className={`${poppins.variable} ${outfit.variable} antialiased`}>
+        <Suspense fallback={null}>
+          <PageViewTracker />
+        </Suspense>
         <Header />
         <main className="pt-20">{children}</main>
         <Footer />
@@ -70,3 +74,4 @@ export default function RootLayout({
     </html>
   );
 }
+
