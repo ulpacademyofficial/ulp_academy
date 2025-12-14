@@ -26,6 +26,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Check for restricted domains
+    const host = request.headers.get("host") || "";
+    if (host.includes("localhost") || host.includes("vercel.app")) {
+      return NextResponse.json(
+        { success: true, message: "Event ignored on restricted domain" },
+        { status: 200 }
+      );
+    }
+
     // Create event
     const event = await Event.create({
       visitorId,

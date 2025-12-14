@@ -165,6 +165,13 @@ export const trackPageView = async (): Promise<{
       return { success: false, error: "Could not get visitor ID" };
     }
 
+    if (
+      window.location.hostname.includes("localhost") ||
+      window.location.hostname.includes("vercel.app")
+    ) {
+      return { success: true };
+    }
+
     const pageInfo = getPageInfo();
     const trackingData = await getTrackingData();
 

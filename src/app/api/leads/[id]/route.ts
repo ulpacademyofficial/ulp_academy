@@ -130,26 +130,31 @@ export async function PATCH(
     const ip = await getIp(request);
     const userAgent = request.headers.get("user-agent") || "unknown";
 
-    if (status) {
-      await Log.create({
-        type: "staff",
-        action: "status_change",
-        details: { oldStatus: rawLead.status, newStatus: status, leadName: rawLead.name },
-        leadId: new ObjectId(id),
-        ip,
-        userAgent,
-      });
-    }
+    const host = request.headers.get("host") || "";
+    const isRestricted = host.includes("localhost") || host.includes("vercel.app");
 
-    if (note && typeof note === "string" && note.trim()) {
-      await Log.create({
-        type: "staff",
-        action: "note_added",
-        details: { note: note.trim(), leadName: rawLead.name },
-        leadId: new ObjectId(id),
-        ip,
-        userAgent,
-      });
+    if (!isRestricted) {
+      if (status) {
+        await Log.create({
+          type: "staff",
+          action: "status_change",
+          details: { oldStatus: rawLead.status, newStatus: status, leadName: rawLead.name },
+          leadId: new ObjectId(id),
+          ip,
+          userAgent,
+        });
+      }
+
+      if (note && typeof note === "string" && note.trim()) {
+        await Log.create({
+          type: "staff",
+          action: "note_added",
+          details: { note: note.trim(), leadName: rawLead.name },
+          leadId: new ObjectId(id),
+          ip,
+          userAgent,
+        });
+      }
     }
 
     return NextResponse.json(

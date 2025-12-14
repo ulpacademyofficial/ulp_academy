@@ -89,6 +89,21 @@ export default function LeadFormModal({ onClose }: LeadFormModalProps) {
       // Get tracking data (device info & geolocation)
       const trackingData = await getTrackingData();
 
+      // Check if on restricted domain (localhost or vercel.app)
+      if (
+        window.location.hostname.includes("localhost") ||
+        window.location.hostname.includes("vercel.app")
+      ) {
+        // Simulate success without saving
+        console.log("Submission skipped on restricted domain");
+        setShowSuccess(true);
+        setTimeout(() => {
+          onClose();
+        }, 2000);
+        setIsSubmitting(false);
+        return;
+      }
+
       // Send data to API with tracking info
       const response = await fetch("/api/leads", {
         method: "POST",

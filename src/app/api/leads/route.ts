@@ -8,6 +8,15 @@ export async function POST(request: NextRequest) {
   try {
     await dbConnect();
 
+    // Check for restricted domains
+    const host = request.headers.get("host") || "";
+    if (host.includes("localhost") || host.includes("vercel.app")) {
+      return NextResponse.json(
+        { success: true, message: "Lead/Log ignored on restricted domain" },
+        { status: 200 }
+      );
+    }
+
     const body = await request.json();
     const { name, email, phone, degree, course, deviceInfo, geolocation } = body;
 

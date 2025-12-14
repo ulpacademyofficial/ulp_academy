@@ -38,13 +38,19 @@ export async function POST(request: NextRequest) {
       // Log successful login
       const ip = await getIp(request);
       const userAgent = request.headers.get("user-agent") || "unknown";
-      await Log.create({
-        type: "staff",
-        action: "login",
-        details: { username },
-        ip,
-        userAgent,
-      });
+      
+      const host = request.headers.get("host") || "";
+      const isRestricted = host.includes("localhost") || host.includes("vercel.app");
+
+      if (!isRestricted) {
+        await Log.create({
+          type: "staff",
+          action: "login",
+          details: { username },
+          ip,
+          userAgent,
+        });
+      }
 
       return NextResponse.json(
         {
