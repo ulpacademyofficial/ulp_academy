@@ -20,10 +20,10 @@ export default function LeadFormWrapper() {
     const hasSubmitted = localStorage.getItem("ulp_lead_submitted");
     
     if (!hasSubmitted) {
-      // Show modal after a short delay for better UX
+      // Show modal after 4 seconds
       const timer = setTimeout(() => {
         setShowModal(true);
-      }, 1500);
+      }, 4000);
       
       return () => clearTimeout(timer);
     }
