@@ -107,19 +107,23 @@ export default function NIOSOpenBoardPage() {
                   </li>
                 ))}
               </ul>
+
+              {/* Check Fee Structure Button */}
+              <div className="flex justify-center lg:justify-start">
+                <Link
+                  href="https://wa.me/918447448370?text=Hi%2C%20I%20want%20to%20know%20about%20the%20fee%20structure%20for%20NIOS%2FOpen%20Board%20admission"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#fca311] text-[#0a192f] px-8 py-4 rounded-full font-bold text-lg hover:bg-[#e5940c] transition-colors shadow-lg no-underline min-w-[300px] text-center mb-12"
+                >
+                  Check Fee Structure
+                </Link>
+              </div>
             </div>
 
             {/* Right Content - Image & CTA */}
             <div className="flex flex-col items-center">
-              {/* Check Fee Structure Button */}
-              <Link
-                href="https://wa.me/918447448370?text=Hi%2C%20I%20want%20to%20know%20about%20the%20fee%20structure%20for%20NIOS%2FOpen%20Board%20admission"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-[#fca311] text-[#0a192f] px-8 py-4 rounded-full font-bold text-lg hover:bg-[#e5940c] transition-colors shadow-lg mb-12 no-underline min-w-[300px] text-center"
-              >
-                Check Fee Structure
-              </Link>
+
 
               {/* Urgency Bubble */}
               <div className="bg-white rounded-2xl p-6 shadow-xl mb-6 border-2 border-[#2980b9] relative">
