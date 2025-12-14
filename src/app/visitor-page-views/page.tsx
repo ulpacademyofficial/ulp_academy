@@ -181,6 +181,7 @@ export default function VisitorPageViewsPage() {
                     <tr>
                       <th className="px-3 py-3 text-left font-semibold">#</th>
                       <th className="px-3 py-3 text-left font-semibold">Visitor ID</th>
+                      <th className="px-3 py-3 text-left font-semibold">Event Name</th>
                       <th className="px-3 py-3 text-left font-semibold">Page</th>
 
                       <th className="px-3 py-3 text-left font-semibold">IP</th>
@@ -210,6 +211,15 @@ export default function VisitorPageViewsPage() {
                             {event.visitorId.length > 20
                               ? `${event.visitorId.substring(0, 20)}...`
                               : event.visitorId}
+                          </span>
+                        </td>
+                        <td className="px-3 py-3">
+                          <span className={`px-2 py-1 rounded text-xs font-semibold ${
+                            event.eventType === 'pageView' 
+                              ? 'bg-blue-100 text-blue-800' 
+                              : 'bg-orange-100 text-orange-800'
+                          }`}>
+                            {event.eventType}
                           </span>
                         </td>
                         <td className="px-3 py-3">

@@ -115,7 +115,7 @@ export default function NIOSOpenBoardPage() {
                   href="https://wa.me/918447448370?text=Hi%2C%20I%20want%20to%20know%20about%20the%20fee%20structure%20for%20NIOS%2FOpen%20Board%20admission"
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => trackEvent("whatsapp_click", { source: "fee_structure_hero" })}
+                  onClick={() => trackEvent("hero_section_fee_structure_whatsapp_click")}
                   className="bg-[#fca311] text-[#0a192f] px-8 py-4 rounded-full font-bold text-lg hover:bg-[#e5940c] transition-colors shadow-lg no-underline min-w-[300px] text-center mb-12"
                 >
                   Check Fee Structure
@@ -210,7 +210,7 @@ export default function NIOSOpenBoardPage() {
               {/* Phone */}
               <Link
                 href="tel:8447448370"
-                onClick={() => trackEvent("phone_click", { number: "8447448370", source: "footer_cta" })}
+                onClick={() => trackEvent("footer_section_phone_click", { number: "8447448370" })}
                 className="flex items-center justify-center gap-3 text-[#0a192f] mb-6 hover:scale-105 transition-transform"
               >
                 <div className="bg-white p-3 rounded-full">
@@ -226,7 +226,7 @@ export default function NIOSOpenBoardPage() {
                   href="https://wa.me/918447448370?text=Hi%2C%20I%20want%20to%20know%20about%20NIOS%2FOpen%20Board%20admission"
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => trackEvent("whatsapp_click", { source: "footer_cta" })}
+                  onClick={() => trackEvent("footer_section_whatsapp_click")}
                   className="inline-flex items-center gap-2 bg-[#25D366] text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-[#128C7E] transition-colors shadow-lg no-underline"
                 >
                   <WhatsAppIcon className="w-6 h-6" />
@@ -236,7 +236,7 @@ export default function NIOSOpenBoardPage() {
                 {/* Contact Us / Enquire Button */}
                 <button
                   onClick={() => {
-                    trackEvent("contact_modal_open", { source: "footer_cta" });
+                    trackEvent("footer_section_contact_modal_open");
                     setShowContactForm(true);
                   }}
                   className="inline-flex items-center gap-2 bg-[#2980b9] text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-[#1a5276] transition-colors shadow-lg border-0 cursor-pointer"
