@@ -54,7 +54,6 @@ const EventSchema = new Schema<IEvent>(
     eventType: {
       type: String,
       required: [true, "Event type is required"],
-      enum: ["pageView", "click", "formSubmit", "custom"],
       default: "pageView",
     },
     pageUrl: {

@@ -76,10 +76,19 @@ export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "50");
+    const type = searchParams.get("type");
+    const excludeType = searchParams.get("exclude_type");
     const skip = (page - 1) * limit;
 
-    const total = await Event.countDocuments();
-    const events = await Event.find({})
+    const query: any = {};
+    if (type) {
+      query.eventType = type;
+    } else if (excludeType) {
+      query.eventType = { $ne: excludeType };
+    }
+
+    const total = await Event.countDocuments(query);
+    const events = await Event.find(query)
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit);

@@ -46,6 +46,8 @@ export default function VisitorPageViewsPage() {
     totalPages: 0,
   });
 
+  const [activeTab, setActiveTab] = useState<"all" | "page_view" | "button_click">("all");
+
   // Check authentication
   useEffect(() => {
     const isAuth = sessionStorage.getItem("leads_authenticated") === "true";
@@ -61,12 +63,20 @@ export default function VisitorPageViewsPage() {
     if (isAuthenticated) {
       fetchEvents(pagination.page);
     }
-  }, [isAuthenticated, pagination.page]);
+  }, [isAuthenticated, pagination.page, activeTab]);
 
   const fetchEvents = async (page: number) => {
     try {
       setLoading(true);
-      const response = await fetch(`/api/events?page=${page}&limit=50`);
+      let query = `?page=${page}&limit=50`;
+      
+      if (activeTab === "page_view") {
+        query += "&type=pageView";
+      } else if (activeTab === "button_click") {
+        query += "&exclude_type=pageView";
+      }
+      
+      const response = await fetch(`/api/events${query}`);
       const data = await response.json();
 
       if (data.success) {
@@ -88,7 +98,7 @@ export default function VisitorPageViewsPage() {
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         {/* Header */}
-        <div className="mb-8 flex justify-between items-start">
+        <div className="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
             <h1 className="font-[family-name:var(--font-poppins)] text-3xl font-bold text-[#0a192f]">
               Visitor Page Views
@@ -108,6 +118,49 @@ export default function VisitorPageViewsPage() {
               Back to Leads
             </Link>
           </div>
+        </div>
+
+        {/* Tabs */}
+        <div className="flex gap-2 mb-6 border-b border-gray-200">
+          <button
+            onClick={() => {
+              setActiveTab("all");
+              setPagination(p => ({ ...p, page: 1 }));
+            }}
+            className={`px-6 py-3 font-medium text-sm transition-colors border-b-2 ${
+              activeTab === "all"
+                ? "border-[#fca311] text-[#fca311]"
+                : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+            }`}
+          >
+            All
+          </button>
+          <button
+            onClick={() => {
+              setActiveTab("page_view");
+              setPagination(p => ({ ...p, page: 1 }));
+            }}
+            className={`px-6 py-3 font-medium text-sm transition-colors border-b-2 ${
+              activeTab === "page_view"
+                ? "border-[#fca311] text-[#fca311]"
+                : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+            }`}
+          >
+            Page Views
+          </button>
+          <button
+            onClick={() => {
+              setActiveTab("button_click");
+              setPagination(p => ({ ...p, page: 1 }));
+            }}
+            className={`px-6 py-3 font-medium text-sm transition-colors border-b-2 ${
+              activeTab === "button_click"
+                ? "border-[#fca311] text-[#fca311]"
+                : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+            }`}
+          >
+            Button Click
+          </button>
         </div>
 
         {/* Table */}
