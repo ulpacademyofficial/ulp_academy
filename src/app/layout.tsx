@@ -36,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Meta Pixel Code */}
+        {/* Meta Pixel Code - COMMENTED OUT
         <Script id="meta-pixel" strategy="afterInteractive">
           {`
             !function(f,b,e,v,n,t,s)
@@ -60,7 +60,7 @@ export default function RootLayout({
             alt=""
           />
         </noscript>
-        {/* End Meta Pixel Code */}
+        End Meta Pixel Code */}
       </head>
       <body className={`${poppins.variable} ${outfit.variable} antialiased`}>
         <Header />
