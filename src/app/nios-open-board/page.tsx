@@ -7,6 +7,8 @@ import LeadFormWrapper from "@/components/LeadFormWrapper";
 import LeadFormModal from "@/components/LeadFormModal";
 
 const degreeCourses = [
+  "10th",
+  "12th",
   "BA",
   "B.Com",
   "B.Sc",
@@ -52,7 +54,7 @@ export default function NIOSOpenBoardPage() {
       {/* Hero Section */}
       <section className="min-h-[85vh] bg-gradient-to-br from-[#f8f9fa] via-[#e8f4fc] to-[#fef9e7] flex items-center py-12">
         <div className="max-w-7xl mx-auto px-4 md:px-8 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 items-center">
             {/* Left Content */}
             <div className="text-center lg:text-left">
               <h1 className="font-[family-name:var(--font-poppins)] text-3xl md:text-4xl lg:text-5xl font-bold text-[#0a192f] mb-4 leading-tight">
@@ -69,7 +71,7 @@ export default function NIOSOpenBoardPage() {
                 <h3 className="text-[#e74c3c] font-semibold text-lg mb-3">
                   Admission consultant for
                 </h3>
-                <div className="flex flex-wrap gap-2 mb-3">
+                <div className="flex flex-wrap gap-2 mb-3 justify-center lg:justify-start">
                   {degreeCourses.map((course, index) => (
                     <span
                       key={index}
@@ -107,6 +109,16 @@ export default function NIOSOpenBoardPage() {
 
             {/* Right Content - Image & CTA */}
             <div className="flex flex-col items-center">
+              {/* Check Fee Structure Button */}
+              <Link
+                href="https://wa.me/918447448370?text=Hi%2C%20I%20want%20to%20know%20about%20the%20fee%20structure%20for%20NIOS%2FOpen%20Board%20admission"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#fca311] text-[#0a192f] px-8 py-4 rounded-full font-bold text-lg hover:bg-[#e5940c] transition-colors shadow-lg mb-12 no-underline min-w-[300px] text-center"
+              >
+                Check Fee Structure
+              </Link>
+
               {/* Urgency Bubble */}
               <div className="bg-white rounded-2xl p-6 shadow-xl mb-6 border-2 border-[#2980b9] relative">
                 <div className="absolute -top-3 -right-3 bg-[#e74c3c] text-white px-3 py-1 rounded-full text-xs font-bold animate-pulse">
