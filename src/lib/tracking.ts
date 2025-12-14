@@ -154,11 +154,11 @@ export const getPageInfo = (): PageInfo => {
   };
 };
 
-// Track page view event
-export const trackPageView = async (): Promise<{
-  success: boolean;
-  error?: string;
-}> => {
+// Track generic event
+export const trackEvent = async (
+  eventType: string,
+  additionalData: Record<string, any> = {}
+): Promise<{ success: boolean; error?: string }> => {
   try {
     const visitorId = getOrCreateVisitorId();
     if (!visitorId) {
@@ -166,13 +166,19 @@ export const trackPageView = async (): Promise<{
     }
 
     if (
-      window.location.hostname.includes("localhost") ||
-      window.location.hostname.includes("vercel.app")
+      typeof window !== "undefined" &&
+      (window.location.hostname.includes("localhost") ||
+        window.location.hostname.includes("vercel.app"))
     ) {
+      console.log(`Event detected (skipped): ${eventType}`, additionalData);
       return { success: true };
     }
 
     const pageInfo = getPageInfo();
+    // For button clicks, we might not need full device/geo data every time to save bandwidth/latency,
+    // but the API expects it or handles it. The API model has optional fields.
+    // Let's send what we have or is cheap.
+    // For consistency, let's just get everything. It's client side.
     const trackingData = await getTrackingData();
 
     const response = await fetch("/api/events", {
@@ -182,27 +188,32 @@ export const trackPageView = async (): Promise<{
       },
       body: JSON.stringify({
         visitorId,
-        eventType: "pageView",
+        eventType,
         pageUrl: pageInfo.pageUrl,
         queryParam: pageInfo.queryParam,
         pageSlug: pageInfo.pageSlug,
         referrer: pageInfo.referrer,
         deviceInfo: trackingData.deviceInfo,
         geolocation: trackingData.geolocation,
+        ...additionalData,
       }),
     });
 
     if (!response.ok) {
-      const result = await response.json();
-      throw new Error(result.message || "Failed to track page view");
+        // Silent fail mostly
     }
 
     return { success: true };
   } catch (error) {
-    console.error("Error tracking page view:", error);
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : "Unknown error",
-    };
+    console.error(`Error tracking event ${eventType}:`, error);
+    return { success: false, error: "Failed to track event" };
   }
+};
+
+// Track page view event
+export const trackPageView = async (): Promise<{
+  success: boolean;
+  error?: string;
+}> => {
+  return trackEvent("pageView");
 };
