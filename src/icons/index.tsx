@@ -9,6 +9,7 @@ export { MailIcon } from "./MailIcon";
 export { LocationIcon } from "./LocationIcon";
 export { WhatsAppIcon } from "./WhatsAppIcon";
 export { ArrowLeftIcon } from "./ArrowLeftIcon";
+export { ArrowRightIcon } from "./ArrowRightIcon";
 export { ClockIcon } from "./ClockIcon";
 export { EyeIcon } from "./EyeIcon";
 export { RefreshIcon } from "./RefreshIcon";

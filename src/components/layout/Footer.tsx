@@ -88,7 +88,7 @@ export default function Footer() {
               {/* Phone */}
               <li className="flex items-start gap-4 mb-5 opacity-90 justify-center md:justify-start">
                 <svg
-                  className="w-5 h-5 text-[#fca311] mt-1 flex-shrink-0 scale-x-[-1]"
+                  className="w-5 h-5 text-[#fca311] mt-1 flex-shrink-0"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
