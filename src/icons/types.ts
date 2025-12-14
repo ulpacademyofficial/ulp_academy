@@ -1,0 +1,11 @@
+import { SVGProps } from "react";
+
+export interface IconProps extends SVGProps<SVGSVGElement> {
+  size?: number | string;
+  className?: string;
+}
+
+export const defaultIconProps: Partial<IconProps> = {
+  size: 20,
+  fill: "currentColor",
+};
