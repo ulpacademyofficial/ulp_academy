@@ -129,7 +129,7 @@ export default function VisitorPageViewsPage() {
                       <th className="px-3 py-3 text-left font-semibold">#</th>
                       <th className="px-3 py-3 text-left font-semibold">Visitor ID</th>
                       <th className="px-3 py-3 text-left font-semibold">Page</th>
-                      <th className="px-3 py-3 text-left font-semibold">Query Params</th>
+
                       <th className="px-3 py-3 text-left font-semibold">IP</th>
                       <th className="px-3 py-3 text-left font-semibold">City</th>
                       <th className="px-3 py-3 text-left font-semibold">Region</th>
@@ -140,6 +140,7 @@ export default function VisitorPageViewsPage() {
                       <th className="px-3 py-3 text-left font-semibold">OS Ver.</th>
                       <th className="px-3 py-3 text-left font-semibold">Device</th>
                       <th className="px-3 py-3 text-left font-semibold">Time</th>
+                      <th className="px-3 py-3 text-left font-semibold">Query Params</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-100">
@@ -163,11 +164,7 @@ export default function VisitorPageViewsPage() {
                             {event.pageSlug || "-"}
                           </span>
                         </td>
-                        <td className="px-3 py-3">
-                          <span className="text-xs text-gray-600 font-mono">
-                            {event.queryParam || "-"}
-                          </span>
-                        </td>
+
                         <td className="px-3 py-3 text-gray-600">
                           {event.geolocation?.ip || "-"}
                         </td>
@@ -197,6 +194,11 @@ export default function VisitorPageViewsPage() {
                         </td>
                         <td className="px-3 py-3 text-gray-500" title={formatDateTime(event.createdAt)}>
                           {getTimeAgo(event.createdAt)}
+                        </td>
+                        <td className="px-3 py-3">
+                          <span className="text-xs text-gray-600 font-mono">
+                            {event.queryParam || "-"}
+                          </span>
                         </td>
                       </tr>
                     ))}
